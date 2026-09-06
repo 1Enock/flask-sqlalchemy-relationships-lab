@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 from flask import Flask, jsonify
-from flask_migrate import Migrate
+
+try:
+    from flask_migrate import Migrate
+except ModuleNotFoundError:
+    Migrate = None
 
 from models import db, Event, Session, Speaker, Bio
 
@@ -11,7 +15,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///app.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.json.compact = False
 
-migrate = Migrate(app, db)
+if Migrate is not None:
+    migrate = Migrate(app, db)
 db.init_app(app)
 
 

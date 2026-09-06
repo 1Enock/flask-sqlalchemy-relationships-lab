@@ -7,7 +7,12 @@ try:
 except ModuleNotFoundError:
     Migrate = None
 
-from models import db, Event, Session, Speaker, Bio
+import os
+
+if __package__ in (None, "") and os.path.basename(os.path.dirname(__file__)) == "server":
+    from models import db, Event, Session, Speaker, Bio
+else:
+    from .models import db, Event, Session, Speaker, Bio
 
 app = Flask(__name__)
 

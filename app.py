@@ -1,10 +1,10 @@
 from server.app import app
 from server.models import Event, Session, Speaker, Bio, db
 
-with app.app_context():
-    try:
+try:
+    with app.app_context():
         events = Event.query.all()
-    except Exception:
-        events = []
+except Exception:
+    events = []
 
 __all__ = ["app", "Event", "Session", "Speaker", "Bio", "db", "events"]
